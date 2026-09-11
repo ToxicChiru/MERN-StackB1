@@ -1,33 +1,12 @@
 import StatCard from "./StatCard";
 import TaskCard from "./TaskCard";
 import AddTask from "./AddTask";
-import { useState } from "react";
 
-function Dashboard() {
-    const [tasks, setTasks] = useState([
-        {
-            id:1,
-            title:"Learn React",
-            description:"Understanding Components",
-            status: "Completed"
-        },
-        {
-            id:2,
-            title:"Learn JavaScript",
-            description:"Understanding Variables, Functions",
-            status: "Pending"
-        },
-        {   id:3,
-            title:"Learn MongoDB",
-            description:"Understanding Databases",
-            status: "Pending"
-        }
-        
-    ]);
+function Dashboard(props) {
 
     function toggleTask(id){
-        setTasks(
-            tasks.map((task) => {
+        props.setTasks(
+            props.tasks.map((task) => {
                 if(task.id === id){
                     return {...task, 
                         status: task.status === "Completed" 
@@ -41,12 +20,12 @@ function Dashboard() {
     }
 
     function addTask(newTask){
-        setTasks([...tasks, newTask]);
+        props.setTasks([...props.tasks, newTask]);
     }
 
     function deleteTask(id){
-        setTasks(
-            tasks.filter((task)=>task.id !==id)
+        props.setTasks(
+            props.tasks.filter((task)=>task.id !==id)
         );
     }
 
@@ -65,9 +44,10 @@ function Dashboard() {
             <h2>Recent Tasks</h2>
 
             <div className="tasks-container">
-                {tasks.map((task)=>(
+                {props.tasks.map((task)=>(
                     <TaskCard 
                         key={task.id} 
+                        id ={task.id}
                         title={task.title} 
                         description={task.description} 
                         status={task.status}
