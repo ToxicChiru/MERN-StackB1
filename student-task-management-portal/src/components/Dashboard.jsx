@@ -44,6 +44,12 @@ function Dashboard() {
         setTasks([...tasks, newTask]);
     }
 
+    function deleteTask(id){
+        setTasks(
+            tasks.filter((task)=>task.id !==id)
+        );
+    }
+
     return (
         <main>
         
@@ -66,6 +72,7 @@ function Dashboard() {
                         description={task.description} 
                         status={task.status}
                         onToggle={()=>toggleTask(task.id)} 
+                        onDelete={()=>deleteTask(task.id)}
                     />
                 ))};
             </div>

@@ -1,114 +1,302 @@
-/* Navbar */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+
+:root {
+    --ink: #172033;
+    --muted: #687386;
+    --paper: #f7f8fc;
+    --surface: #ffffff;
+    --line: #e5e8f0;
+    --navy: #172b4d;
+    --blue: #3978d8;
+    --coral: #f47b61;
+    --mint: #d9f2e7;
+    --gold: #f6c85f;
+    --shadow: 0 18px 45px rgba(33, 51, 82, 0.09);
+}
+
+body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "DM Sans", sans-serif;
+}
 
 nav {
-    background-color: #222;
-    color: white;
-
-    padding: 15px 30px;
-
+    align-items: center;
+    background: var(--navy);
+    color: #fff;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    padding: 20px clamp(20px, 5vw, 72px);
+}
+
+nav h2,
+.welcome h1,
+main > h2,
+.stat-card h2,
+.task-card h3,
+main > div > h2 {
+    font-family: "Space Grotesk", sans-serif;
 }
 
 nav h2 {
+    font-size: 20px;
+    letter-spacing: -0.4px;
     margin: 0;
-    font-size: 18px;
 }
 
 .nav-links {
     display: flex;
-    gap: 25px;
+    gap: 28px;
 }
 
 .nav-links span {
+    color: #cbd5e6;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 160ms ease;
 }
 
-
-/* Welcome */
+.nav-links span:hover {
+    color: var(--gold);
+}
 
 .welcome {
-    padding: 30px;
+    background: linear-gradient(120deg, #e8f0ff 0%, #fff4df 100%);
+    padding: 52px clamp(20px, 5vw, 72px) 48px;
 }
 
 .welcome h1 {
+    font-size: clamp(30px, 5vw, 48px);
+    letter-spacing: -1.8px;
     margin: 0;
-    font-size: 28px;
+    max-width: 650px;
 }
-
-
-/* Dashboard */
 
 main {
-    padding: 0 30px 30px;
+    margin: 0 auto;
+    max-width: 1240px;
+    padding: 36px clamp(20px, 5vw, 72px) 72px;
 }
 
-
-/* Stat Cards */
-
 .stats-container {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 30px;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-bottom: 48px;
 }
 
 .stat-card {
-    background-color: white;
-
-    border: 1px solid #ccc;
-    border-radius: 6px;
-
-    width: 150px;
-
-    padding: 15px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    min-height: 132px;
+    overflow: hidden;
+    padding: 22px;
+    position: relative;
 }
 
+.stat-card::after {
+    background: var(--coral);
+    border-radius: 50%;
+    content: "";
+    height: 52px;
+    position: absolute;
+    right: -18px;
+    top: -18px;
+    width: 52px;
+}
+
+.stat-card:nth-child(2)::after { background: var(--mint); }
+.stat-card:nth-child(3)::after { background: #dce8ff; }
+.stat-card:nth-child(4)::after { background: #fff0c9; }
+
 .stat-card h3 {
-    margin: 0 0 15px;
-    font-size: 16px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    margin: 0 0 20px;
+    text-transform: uppercase;
 }
 
 .stat-card h2 {
+    font-size: 30px;
+    letter-spacing: -1px;
     margin: 0;
-    font-size: 24px;
 }
-
-
-/* Recent Tasks */
 
 main > h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
+    font-size: 24px;
+    letter-spacing: -0.7px;
+    margin: 0 0 18px;
 }
 
+main > div > h2 {
+    font-size: 17px;
+    margin: 0 0 12px;
+}
 
-/* Task Cards */
+main form {
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(33, 51, 82, 0.05);
+    display: flex;
+    gap: 12px;
+    margin-bottom: 42px;
+    padding: 18px 20px;
+}
+
+main form input {
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    color: var(--ink);
+    font: 14px "DM Sans", sans-serif;
+    min-width: 220px;
+    padding: 10px 12px;
+}
+
+main form input:focus {
+    border-color: var(--blue);
+    outline: 3px solid rgba(57, 120, 216, 0.15);
+}
+
+main form button,
+.task-card button {
+    border: 0;
+    border-radius: 7px;
+    color: #fff;
+    cursor: pointer;
+    font: 600 13px "DM Sans", sans-serif;
+    padding: 10px 14px;
+}
+
+main form button {
+    background: var(--coral);
+}
+
+main form button:hover,
+main form button:focus-visible {
+    background: #dc654d;
+}
 
 .tasks-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
 .task-card {
-    background-color: white;
-
-    border: 1px solid #ccc;
-    border-radius: 6px;
-
-    padding: 18px 20px;
-
-    display: flex;
-    justify-content: space-between;
     align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--blue);
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(33, 51, 82, 0.05);
+    display: grid;
+    gap: 16px;
+    grid-template-columns: minmax(150px, 1.2fr) minmax(180px, 2fr) auto auto;
+    padding: 18px 20px;
+    transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.task-card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
 }
 
 .task-card h3 {
-    margin: 0;
     font-size: 16px;
+    margin: 0;
 }
 
 .task-card p {
+    color: var(--muted);
+    font-size: 14px;
     margin: 0;
+}
+
+.task-card p:nth-of-type(2) {
+    background: #eef3ff;
+    border-radius: 20px;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 700;
+    justify-self: start;
+    padding: 7px 10px;
+    white-space: nowrap;
+}
+
+.task-card button {
+    background: var(--navy);
+    transition: background 160ms ease, transform 160ms ease;
+}
+
+.task-card button:hover,
+.task-card button:focus-visible {
+    background: var(--blue);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 760px) {
+    .stats-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-bottom: 36px;
+    }
+
+    .task-card {
+        align-items: start;
+        grid-template-columns: 1fr auto;
+    }
+
+    .task-card p:first-of-type { grid-column: 1 / -1; }
+    .task-card p:nth-of-type(2) { grid-column: 1; }
+    .task-card button { grid-column: 2; grid-row: 3; }
+}
+
+@media (max-width: 430px) {
+    nav {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .welcome {
+        padding-bottom: 36px;
+        padding-top: 38px;
+    }
+
+    .stats-container { gap: 10px; }
+
+    main form {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    main form input {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .stat-card {
+        min-height: 112px;
+        padding: 16px;
+    }
+
+    .stat-card h2 { font-size: 24px; }
+
+    .task-card {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .task-card h3,
+    .task-card p:first-of-type {
+        flex-basis: 100%;
+    }
+
+    .task-card button { margin-left: auto; }
 }
