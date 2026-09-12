@@ -35,7 +35,7 @@ function App(){
       <Navbar />
       <Routes>
         <Route path="/" element={<Dashboard tasks={tasks} setTasks={setTasks} />} />
-        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/tasks" element={<Tasks tasks={tasks} />} />
         <Route path="/tasks/:id" 
                element={<TaskDetails tasks={tasks} />} />
       </Routes>

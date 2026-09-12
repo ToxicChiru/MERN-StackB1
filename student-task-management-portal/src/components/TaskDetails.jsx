@@ -4,6 +4,9 @@ function TaskDetails(props){
     const task = props.tasks.find(
         (tasks) => tasks.id === Number(id)
     );
+    if(!task){
+        return <h2> Task Not Found!</h2>
+    }
     return (
         <div>
             <h1>Task Details</h1>
