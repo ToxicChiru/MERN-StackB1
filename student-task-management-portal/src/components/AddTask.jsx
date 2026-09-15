@@ -4,7 +4,7 @@ function AddTask(props){
     const [title, setTitle] = useState("");
     const[description, setDescription] = useState("");
     
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault();
         const newTask = {
             id:Date.now(),
@@ -12,8 +12,14 @@ function AddTask(props){
             description: description,
             status: "Pending"
         };
-        console.log("object:", newTask);
-        props.onAddTask(newTask);
+        const response = await fetch("http://localhost:5000/api/tasks", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify(newTask)
+        });
+
+        const data = await response.json();
+        props.onAddTask(data);
     }
     
     return (

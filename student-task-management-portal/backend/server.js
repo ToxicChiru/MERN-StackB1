@@ -9,6 +9,7 @@ const app = express();
 
 // use cors middleware to handle requests
 app.use(cors());
+app.use(express.json());
 
 const tasks = [
     {
@@ -28,6 +29,12 @@ const tasks = [
 app.get("/api/tasks", (req, res) =>{
     res.json(tasks);
 });
+
+app.post("/api/tasks", (req, res)=>{
+    const newTask = req.body;
+    tasks.push(newTask);
+    res.json(newTask);
+})
 
 // API Route (Testing Backend)
 app.get("/", (req, res) => {

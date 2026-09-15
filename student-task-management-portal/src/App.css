@@ -18,6 +18,7 @@ body {
     background: var(--paper);
     color: var(--ink);
     font-family: "DM Sans", sans-serif;
+    line-height: 1.5;
 }
 
 nav {
@@ -34,7 +35,12 @@ nav h2,
 main > h2,
 .stat-card h2,
 .task-card h3,
-main > div > h2 {
+main > div > h2,
+.page-heading h1,
+.task-detail h1,
+.task-list-item h3,
+.empty-state h2,
+.add-task-section h2 {
     font-family: "Space Grotesk", sans-serif;
 }
 
@@ -49,7 +55,7 @@ nav h2 {
     gap: 28px;
 }
 
-.nav-links span {
+.nav-links a {
     color: #cbd5e6;
     cursor: pointer;
     font-size: 14px;
@@ -57,8 +63,24 @@ nav h2 {
     transition: color 160ms ease;
 }
 
-.nav-links span:hover {
+.nav-links a:hover,
+.nav-links a:focus-visible {
     color: var(--gold);
+}
+
+.nav-links a.active {
+    color: #fff;
+    position: relative;
+}
+
+.nav-links a.active::after {
+    background: var(--gold);
+    bottom: -8px;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    right: 0;
 }
 
 .welcome {
@@ -73,6 +95,13 @@ nav h2 {
     max-width: 650px;
 }
 
+.welcome p {
+    color: var(--muted);
+    font-size: 16px;
+    margin: 12px 0 0;
+    max-width: 560px;
+}
+
 main {
     margin: 0 auto;
     max-width: 1240px;
@@ -82,7 +111,7 @@ main {
 .stats-container {
     display: grid;
     gap: 16px;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-bottom: 48px;
 }
 
@@ -150,6 +179,36 @@ main form {
     padding: 18px 20px;
 }
 
+.add-task-section {
+    margin-bottom: 42px;
+}
+
+.add-task-section h2 {
+    color: var(--navy);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 17px;
+    margin: 0 0 12px;
+}
+
+.add-task-section form {
+    margin-bottom: 0;
+}
+
+.field-group {
+    display: flex;
+    flex: 1 1 220px;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field-group span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
 main form input {
     border: 1px solid var(--line);
     border-radius: 7px;
@@ -198,7 +257,8 @@ main form button:focus-visible {
     box-shadow: 0 8px 25px rgba(33, 51, 82, 0.05);
     display: grid;
     gap: 16px;
-    grid-template-columns: minmax(150px, 1.2fr) minmax(180px, 2fr) auto auto;
+    grid-template-columns: minmax(150px, 1.2fr) minmax(180px, 2fr) auto auto auto auto;
+    min-width: 0;
     padding: 18px 20px;
     transition: box-shadow 160ms ease, transform 160ms ease;
 }
@@ -211,12 +271,15 @@ main form button:focus-visible {
 .task-card h3 {
     font-size: 16px;
     margin: 0;
+    overflow-wrap: anywhere;
 }
 
 .task-card p {
     color: var(--muted);
     font-size: 14px;
     margin: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .task-card p:nth-of-type(2) {
@@ -241,6 +304,130 @@ main form button:focus-visible {
     transform: translateY(-1px);
 }
 
+.task-card button:last-of-type {
+    background: #fbe9e5;
+    color: #a14b3a;
+}
+
+.task-card button:last-of-type:hover,
+.task-card button:last-of-type:focus-visible {
+    background: var(--coral);
+    color: #fff;
+}
+
+.page-shell {
+    min-height: calc(100vh - 69px);
+}
+
+.page-heading {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+}
+
+.page-heading h1,
+.task-detail h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(30px, 5vw, 44px);
+    letter-spacing: -1.5px;
+    margin: 0 0 8px;
+}
+
+.page-heading > p:last-child {
+    color: var(--muted);
+    margin: 0;
+}
+
+.eyebrow {
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+}
+
+.task-list {
+    display: grid;
+    gap: 14px;
+}
+
+.task-list-item,
+.task-detail,
+.empty-state {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.task-list-item {
+    border-left: 4px solid var(--blue);
+    padding: 20px 22px;
+    transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.task-list-item:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+}
+
+.task-list-item h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 18px;
+    margin: 0 0 8px;
+    overflow-wrap: anywhere;
+}
+
+.task-list-item > p:not(.status) {
+    color: var(--muted);
+    margin: 0 0 16px;
+}
+
+.status {
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 0;
+    padding: 7px 10px;
+}
+
+.status-completed {
+    background: var(--mint);
+    color: #287552;
+}
+
+.status-pending {
+    background: #fff0c9;
+    color: #946c00;
+}
+
+.task-detail,
+.empty-state {
+    margin: 0 auto;
+    max-width: 760px;
+    padding: clamp(24px, 5vw, 48px);
+}
+
+.task-detail h1 {
+    margin-bottom: 18px;
+}
+
+.task-detail-description,
+.empty-state p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0 0 24px;
+    overflow-wrap: anywhere;
+}
+
+.empty-state h2 {
+    font-family: "Space Grotesk", sans-serif;
+    margin: 0 0 10px;
+}
+
 @media (max-width: 760px) {
     .stats-container {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -255,6 +442,20 @@ main form button:focus-visible {
     .task-card p:first-of-type { grid-column: 1 / -1; }
     .task-card p:nth-of-type(2) { grid-column: 1; }
     .task-card button { grid-column: 2; grid-row: 3; }
+
+    .page-shell {
+        padding-top: 28px;
+    }
+
+    .task-card a {
+        grid-column: 1 / -1;
+        justify-self: start;
+    }
+
+    .add-task-section form {
+        align-items: stretch;
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 430px) {
@@ -299,4 +500,26 @@ main form button:focus-visible {
     }
 
     .task-card button { margin-left: auto; }
+
+    .task-card a {
+        width: 100%;
+    }
+}
+
+.task-card a {
+    background: #eef3ff;
+    border-radius: 7px;
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 14px;
+    text-align: center;
+    transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.task-card a:hover,
+.task-card a:focus-visible {
+    background: var(--blue);
+    color: #fff;
+    transform: translateY(-1px);
 }
