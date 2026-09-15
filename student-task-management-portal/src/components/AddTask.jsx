@@ -12,7 +12,8 @@ function AddTask(props){
             description: description,
             status: "Pending"
         };
-        const response = await fetch("http://localhost:5000/api/tasks", {
+        try{
+            const response = await fetch("http://localhost:5000/api/tasks", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body: JSON.stringify(newTask)
@@ -20,6 +21,9 @@ function AddTask(props){
 
         const data = await response.json();
         props.onAddTask(data);
+        }catch(error){
+            console.log(error);
+        }
     }
     
     return (
