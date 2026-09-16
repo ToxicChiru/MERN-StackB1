@@ -1,3 +1,7 @@
+const dns = require("node:dns");
+
+dns.setServers(["1.1.1.1", "8.8.8.8"]); 
+
 require("dotenv").config();
 
 // bring express in Node.js
@@ -15,14 +19,19 @@ const mongoose = require("mongoose");
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URL)
+const mongoUri = process.env.MONGO_URL || process.env.MONGODB_URL;
+
+if (!mongoUri) {
+    console.error("Missing MongoDB connection string. Set MONGO_URL or MONGODB_URL in backend/.env");
+    process.exit(1);
+}
+
+mongoose.connect(mongoUri)
 .then(()=>{
-    console.log
-    ("MongoDB Connected Successfully!");
+    console.log("MongoDB Connected Successfully!");
 }).catch((error)=>{
-    console.log
-    ("MongoDB Connection Failed: ", error.message);
-})
+    console.log("MongoDB Connection Failed: ", error.message);
+});
 
 const tasks = [
     {
