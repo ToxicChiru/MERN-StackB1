@@ -47,13 +47,17 @@ function Dashboard(props) {
         );
     }
 
+    const totalTasks = props.tasks.length;
+    const completedTasks = props.tasks.filter((task) => task.status === "Completed").length;
+    const pendingTasks = props.tasks.filter((task) => task.status === "Pending").length;
+
     return (
         <main>
         
             <div className="stats-container">
-                <StatCard title="Total Tasks" value="10"/>
-                <StatCard title="Completed" value="6"/>
-                <StatCard title="Pending" value="4"/>
+                <StatCard title="Total Tasks" value={String(totalTasks)}/>
+                <StatCard title="Completed" value={String(completedTasks)}/>
+                <StatCard title="Pending" value={String(pendingTasks)}/>
                 
             </div>
 
@@ -62,17 +66,48 @@ function Dashboard(props) {
             <h2>Recent Tasks</h2>
 
             <div className="tasks-container">
-                {props.tasks.map((task)=>(
-                    <TaskCard 
-                        key={task.id} 
-                        id ={task.id}
-                        title={task.title} 
-                        description={task.description} 
-                        status={task.status}
-                        onToggle={()=>toggleTask(task.id)} 
-                        onDelete={()=>deleteTask(task.id)}
-                    />
-                ))};
+                {props.tasks.length === 0 ? (
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        minHeight: '220px',
+                        textAlign: 'center',
+                        color: '#333',
+                        width: '100%'
+                    }}>
+                        <div style={{
+                            width: '72px',
+                            height: '72px',
+                            borderRadius: '50%',
+                            backgroundColor: '#dc2626',
+                            color: '#fff',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '42px',
+                            fontWeight: 'bold',
+                            marginBottom: '12px',
+                            lineHeight: 1
+                        }}>
+                            !
+                        </div>
+                        <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>No tasks found</div>
+                    </div>
+                ) : (
+                    props.tasks.map((task)=>(
+                        <TaskCard 
+                            key={task.id} 
+                            id ={task.id}
+                            title={task.title} 
+                            description={task.description} 
+                            status={task.status}
+                            onToggle={()=>toggleTask(task.id)} 
+                            onDelete={()=>deleteTask(task.id)}
+                        />
+                    ))
+                )}
             </div>
 
         </main>
