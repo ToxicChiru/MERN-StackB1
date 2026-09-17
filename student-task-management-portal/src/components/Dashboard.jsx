@@ -5,7 +5,7 @@ import AddTask from "./AddTask";
 function Dashboard(props) {
 
     async function toggleTask(id){
-        const task = props.tasks.find((task)=>task.id === id);
+        const task = props.tasks.find((task)=>task._id === id);
         const newStatus = task.status ==="Completed"
          ? "Pending" : "Completed";
         
@@ -20,11 +20,15 @@ function Dashboard(props) {
             })
         });
 
+        if (!response.ok) {
+            throw new Error("Unable to update task status");
+        }
+
         const updatedTask = await response.json();
 
         props.setTasks(
             props.tasks.map((task) => {
-                if(task.id === id){
+                if(task._id === id){
                     return updatedTask;
                 }
                 return task;
@@ -41,9 +45,13 @@ function Dashboard(props) {
                 method: "DELETE"
             });
 
+            if (!response.ok) {
+                throw new Error("Unable to delete task");
+            }
+
             const deletedTask = await response.json();
         props.setTasks(
-            props.tasks.filter((task)=>task.id !== deletedTask.id)
+            props.tasks.filter((task)=>task._id !== deletedTask._id)
         );
     }
 
@@ -98,13 +106,13 @@ function Dashboard(props) {
                 ) : (
                     props.tasks.map((task)=>(
                         <TaskCard 
-                            key={task.id} 
-                            id ={task.id}
+                            key={task._id || task.id} 
+                            id={task._id || task.id}
                             title={task.title} 
                             description={task.description} 
                             status={task.status}
-                            onToggle={()=>toggleTask(task.id)} 
-                            onDelete={()=>deleteTask(task.id)}
+                            onToggle={()=>toggleTask(task._id || task.id)} 
+                            onDelete={()=>deleteTask(task._id || task.id)}
                         />
                     ))
                 )}
